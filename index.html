@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTrack</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TaskTrack</h1>
+        
+        <input type="text" id="task-input" placeholder="Enter a new task...">
+        <select id="priority-select">
+            <option value="high">Important</option>
+            <option value="low">Later</option>
+        </select>
+        <button onclick="addTask()">Add Task</button>
+        <ul id="todo-list">
+            
+        </ul>
+    </div>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("task-input");
+            var taskText = taskInput.value.trim();
+            var priority = document.getElementById("priority-select").value;
+
+            if (taskText !== "") {
+                var taskList = document.getElementById("todo-list");
+                var newTask = document.createElement("li");
+                newTask.textContent = taskText;
+
+                if (priority === "high") {
+                    newTask.classList.add("high-priority");
+                    taskList.insertBefore(newTask, taskList.firstChild);
+                } else {
+                    newTask.classList.add("low-priority");
+                    taskList.appendChild(newTask);
+                }
+
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "Done";
+                deleteButton.classList.add("delete-btn");
+                deleteButton.onclick = function() {
+                    taskList.removeChild(newTask);
+                };
+                newTask.appendChild(deleteButton);
+
+                taskInput.value = "";
+            } else {
+                alert("Invalid task!");
+            }
+        }
+    </script>
+</body>
+</html>
